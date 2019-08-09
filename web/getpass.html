@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>找回密码</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="网站关键词">
+    <meta name="Description" content="网站介绍">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <link rel="stylesheet" href="./css/reg.css">
+</head>
+
+<body>
+    <div id="ajax-hook"></div>
+    <div class="wrap">
+        <div class="wpn">
+            <div class="form-data find_password">
+                <h4>找回密码</h4>
+                <p class="right_now">已有账号，<a href="./index.html">马上登录</a></p>
+                <p class="p-input pos">
+                    <label for="pc_tel" class="one">账户名</label>
+                    <input type="text" id="pc_tel" class="loginName">
+                </p>
+                <p class="p-input pos">
+                    <label for="pc_tel" class="two">新密码</label>
+                    <input type="text" id="pc_tel" class="Possword">
+                </p>
+                <button class="lang-btn next" id="tijiao">找回密码</button>
+                <p class="right">Powered by © 2019</p>
+            </div>
+        </div>
+    </div>
+    <script src="./js/jquery.js"></script>
+    <script src="./js/agree.js"></script>
+    <script src="./js/reset.js"></script>
+    <div style="text-align:center;">
+    </div>
+</body>
+<script>
+    let url = "http://localhost:3000";
+    // 字母开头，允许5-16字节，允许字母数字下划线
+    let reg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+    // 必须包含大小写字母和数字的组合，不能使用特殊字符，长度在 8-10 之间
+    let reg1 = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,10}$/;
+    $(".loginName").blur(function () {
+        let $userName = $(".loginName").val().trim();
+        if (reg.test($userName) != true) {
+            $(".loginName").val("");
+            $(".one").text("账户格式有误");
+        }
+    });
+    $(".Possword").blur(function () {
+        let $pwd = $(".Possword").val().trim();
+        if (reg1.test($pwd) != true) {
+            $(".Possword").val("");
+            $(".two").text("密码格式有误");
+        }
+    });
+    document.querySelector("#tijiao").onclick = function () {
+        // 获取用户名
+        let loginName = document.querySelector(".loginName").value.trim();
+        // console.log(loginName);
+        let possword = document.querySelector(".Possword").value.trim();
+        if (loginName == "") {
+            alert("账户不允许为空！");
+            return;
+        } else if (possword == "") {
+            alert("密码不允许为空！");
+            return;
+        }
+        let myUrl = `${url}/getpass`;
+        fetch(myUrl, {
+            method: "post",
+            body: `name=${loginName}&pwd=${possword}`,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded' // 指定提交方式为表单提交
+            }
+        }).then(data => data.json()).then(res => {
+            console.log(res);
+            if (res.code == "201") {
+                alert("密码找回成功!");
+                window.location.href = "./index.html";
+            } else {
+                alert("账户不存在！");
+            }
+        });
+    };
+</script>
+
+</html>

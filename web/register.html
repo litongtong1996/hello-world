@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>注册界面</title>
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+</head>
+<style>
+	em {
+		display: block;
+		font-style: normal;
+		font-size: 14px;
+		color: rgb(179, 177, 177)
+	}
+</style>
+
+<body>
+	<div class="wrap login_wrap">
+		<div class="content">
+
+			<div class="logo"></div>
+
+			<div class="login_box">
+
+				<div class="login_form">
+					<div class="login_title">
+						注册
+					</div>
+					<!-- <form action="#" method="post"> -->
+
+						<div class="form_text_ipt">
+							<input name="username" type="text" placeholder="账户" id="userName">
+							<em>字母开头，允许数字下划线，5-16字节</em>
+						</div>
+						<div class="ececk_warning">
+							<!-- <span>账户不能为空</span> -->
+						</div>
+						<div class="form_text_ipt">
+							<input name="password" type="password" placeholder="密码" id="password">
+							<em>必须包含大小写字母和数字的组合8-10字符</em>
+						</div>
+						<div class="ececk_warning">
+							<!-- <span>密码不能为空</span> -->
+						</div>
+						<div class="form_text_ipt">
+							<input name="code" type="text" placeholder="手机号码" id="tel">
+						</div>
+						<div class="ececk_warning"><span>手机号码不能为空</span></div>
+						<div class="form_text_ipt">
+							<input name="repassword" type="password" placeholder="确认密码" id="repassword">
+						</div>
+						<div class="ececk_warning"><span>密码不能为空</span></div>
+						<div class="form_btn">
+							<button type="button" onclick="javascript:window.location.href='#'">注册</button>
+						</div>
+						<div class="form_reg_btn">
+							<span>已有帐号？</span><a href="index.html">马上登录</a>
+						</div>
+					<!-- </form> -->
+					<div class="other_login">
+						<div class="left other_left">
+							<span>其它登录方式</span>
+						</div>
+						<div class="right other_right">
+							<a href="#"><i class="fa fa-qq fa-2x"></i></a>
+							<a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+							<a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<div style="text-align:center;">
+	</div>
+</body>
+<script>
+	$(function () {
+		let url = "http://localhost:3000";
+		// 必须包含大小写字母和数字的组合，不能使用特殊字符，长度在 8-10 之间
+		let reg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,10}$/;
+		// 电话
+		let reg1 = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+		// 字母开头，允许5-16字节，允许字母数字下划线
+		let reg2 = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+		$("#userName").blur(function () {
+			let $userName = $("#userName").val().trim();
+			if (reg2.test($userName) != true) {
+				$("#userName").val("").attr("placeholder", "账户输入格式有误");
+			}
+		});
+		$("#password").blur(function () {
+			let $password = $("#password").val().trim();
+			if (reg.test($password) != true) {
+				$("#password").val("").attr("placeholder", "密码输入格式有误");
+			}
+		});
+		$("#repassword").blur(function () {
+			let $repassword = $("#repassword").val().trim();
+			let $password = $("#password").val().trim();
+			if ($repassword != $password) {
+				$("#repassword").val("").attr("placeholder", "两次密码不一致");
+			}
+		});
+		$("#tel").blur(function () {
+			let $tel = $("#tel").val().trim();
+			if (reg1.test($tel) != true) {
+				$("#tel").val("").attr("placeholder", "手机号码格式输入有误");
+			}
+		});
+		$("button").click(function () {
+			let $userName = $("#userName").val().trim();
+			let $password = $("#password").val().trim();
+			let $repassword = $("#repassword").val().trim();
+			let $tel = $("#tel").val().trim();
+			if ($userName == "") {
+				alert("账户不允许为空！");
+				return;
+			} else if ($password == "") {
+				alert("密码不允许为空！");
+				return;
+			} else if ($tel == "") {
+				alert("手机号码不允许为空！");
+				return;
+			} else if ($repassword == "") {
+				alert("两次密码不一致！");
+				return;
+			}
+			let myUrl = `${url}/regesiter`;
+			fetch(myUrl, {
+				method: "post",
+				body: `name=${$userName}&pwd=${$password}&tel=${$tel}`,
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded' // 指定提交方式为表单提交
+				}
+			}).then(data => data.json()).then(res => {
+				console.log(res.code);
+				if (res.code != "501") {
+					alert("注册成功");
+					window.location.href = "./index.html";
+				} else {
+					alert("用户名重复");
+				}
+			});
+		})
+	})
+</script>
+
+</html>

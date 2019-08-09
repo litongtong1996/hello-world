@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>登录界面</title>
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+</head>
+
+<body>
+	<div class="wrap login_wrap">
+		<div class="content">
+			<div class="logo"></div>
+			<div class="login_box">
+
+				<div class="login_form">
+					<div class="login_title">
+						登录
+					</div>
+					<!-- <form action="#" method="post"> -->
+
+						<div class="form_text_ipt">
+							<input name="username" type="text" placeholder="账户" class="userName" onblur="GetPwdAndChk()">
+						</div>
+						<div class="ececk_warning"><span>账户不能为空</span></div>
+						<div class="form_text_ipt">
+							<input name="password" type="password" placeholder="密码" class="pwd">
+						</div>
+						<div class="ececk_warning"><span>密码不能为空</span></div>
+						<div class="form_check_ipt">
+							<div class="left check_left">
+								<label><input name="" type="checkbox" id="chkRememberPwd"> 记住密码</label>
+							</div>
+							<div class="right check_right">
+								<a href="./getpass.html">忘记密码</a>
+							</div>
+						</div>
+						<div class="form_btn">
+							<button type="button" OnClick="SetPwdAndChk()">登录</button>
+						</div>
+						<div class="form_reg_btn">
+							<span>还没有帐号？</span><a href="register.html">马上注册</a>
+						</div>
+					<!-- </form> -->
+					<div class="other_login">
+						<div class="left other_left">
+							<span>其它登录方式</span>
+						</div>
+						<div class="right other_right">
+							<a href="#"><i class="fa fa-qq fa-2x"></i></a>
+							<a href="#"><i class="fa fa-weixin fa-2x"></i></a>
+							<a href="#"><i class="fa fa-weibo fa-2x"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<div style="text-align:center;">
+	</div>
+</body>
+<script src="./js/s.js"></script>
+<script>
+    $(function () {
+        let url = "http://localhost:3000";
+        // 字母开头，允许5-16字节，允许字母数字下划线
+        let reg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+        // 必须包含大小写字母和数字的组合，不能使用特殊字符，长度在 8-10 之间
+        let reg1 = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,10}$/;
+        $(".userName").blur(function () {
+            let $userName = $(".userName").val().trim();
+            if (reg.test($userName) != true) {
+                $(".userName").val("").attr("placeholder", "账户格式有误");
+            }
+        });
+        $(".pwd").blur(function () {
+            let $pwd = $(".pwd").val().trim();
+            if (reg1.test($pwd) != true) {
+                $(".pwd").val("").attr("placeholder", "密码格式有误");
+            }
+        });
+        $("button").click(function () {
+            let $userName = $(".userName").val().trim();
+            let $pwd = $(".pwd").val().trim();
+            // console.log($userName,$pwd);
+            if ($userName == "") {
+                alert("用户名不允许为空！");
+                return;
+            } else if ($pwd == "") {
+                alert("密码不允许为空！");
+                return;
+            }
+            let myUrl = `${url}/users`;
+            fetch(myUrl, {
+                method: "post",
+                body: `name=${$userName}&pwd=${$pwd}`,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded' // 指定提交方式为表单提交
+                }
+            }).then(data => data.json()).then(res => {
+                console.log(res.code);
+                if (res.code == "202") {
+					alert("登录成功");
+					setCookie("name", $userName, 5);
+					window.location.href = "./sort.html";
+                } else {
+                    alert('登录失败');
+                }
+            });
+        })
+    })
+</script>
+<script src="./js/cookie.js"></script>
+</html>

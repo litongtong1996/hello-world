@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul {
+        list-style-type: none;
+        border: 0;
+        background: #fff;
+    }
+
+    ul li {
+        height: 242px;
+        width: 960px;
+        margin: 0 auto;
+        position: relative;
+        background: #fff;
+        transition: all .2s ease-in-out;
+        padding-left: 20px;
+        box-sizing: border-box;
+    }
+
+    ul li:hover {
+        background: #f8f8f8;
+    }
+
+    ul li img {
+        position: absolute;
+        left: 20px;
+        top: 21px;
+        display: block;
+        width: 200px;
+        height: 200px;
+        cursor: pointer;
+    }
+
+    ul li p:first-child {
+        position: absolute;
+        left: 240px;
+        top: 21px;
+        line-height: 20px;
+        height: 20px;
+        width: 720px;
+        color: #1a66b3;
+        font-family: simsun;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    ul li p:first-child:hover {
+        color: #fa5000;
+        text-decoration: underline;
+    }
+
+    ul li p:nth-child(2) {
+        position: absolute;
+        left: 240px;
+        top: 70px;
+        color: #1a66b3;
+        line-height: 30px;
+        height: 30px;
+        font-size: 14px;
+        overflow: hidden;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+
+    ul li p:nth-child(2):hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    ul li p:nth-child(3) {
+        position: absolute;
+        left: 240px;
+        top: 48px;
+        line-height: 30px;
+        width: 720px;
+        font-size: 14px;
+        color: #1a66b3;
+        font-family: "微软雅黑";
+    }
+
+    ul li p:nth-child(3):hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    ul li p:nth-child(4) {
+        position: absolute;
+        left: 240px;
+        top: 145px;
+        line-height: 20px;
+        height: 40px;
+        overflow: hidden;
+        color: #333;
+        width: 720px;
+        font-size: 14px;
+    }
+
+    ul li p:nth-child(5) {
+        position: absolute;
+        left: 240px;
+        top: 145px;
+        line-height: 20px;
+        height: 40px;
+        overflow: hidden;
+        color: #333;
+        width: 720px;
+        font-size: 14px;
+    }
+
+    ul li p:nth-child(6) {
+        position: absolute;
+        left: 240px;
+        top: 120px;
+        color: #646464;
+        font-size: 12px;
+    }
+
+    ul li p:nth-child(7) {
+        position: absolute;
+        left: 240px;
+        top: 100px;
+        font-size: 12px;
+        color: #646464;
+    }
+
+    ul li p:nth-child(8) {
+        position: absolute;
+        left: 240px;
+        top: 193px;
+        line-height: 20px;
+        height: 40px;
+        overflow: hidden;
+        color: #333;
+        width: 720px;
+        font-size: 14px;
+    }
+
+    ul li p:nth-child(9) {
+        position: absolute;
+        left: 240px;
+        top: 222px;
+    }
+
+    .sub {
+        background: #f5f5f5;
+        float: none;
+        width: auto;
+    }
+
+    .sub ol {
+        height: 62px;
+        margin: 0 auto;
+        overflow: hidden;
+        line-height: 30px;
+        width: 1200px;
+        list-style: none;
+    }
+
+    .sub ol li {
+        float: left;
+        padding: 0 15px;
+        margin-left: -1px;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .sub ol li:hover {
+        color: #fa5000;
+        text-decoration: underline;
+    }
+
+    ul li .bottom_p {
+        position: absolute;
+        left: 222px;
+        top: 193px;
+    }
+
+    ul li .bottom_p .search_btn_cart {
+        width: 100px;
+        height: 28px;
+        line-height: 28px;
+        background: #ff2832;
+        border-radius: 3px;
+        display: inline-block;
+        zoom: 1;
+        color: #fff;
+        text-align: center;
+        font-family: 'Microsoft Yahei';
+        font-size: 14px;
+        margin-right: 10px;
+    }
+
+    ul li .bottom_p .search_btn_cart:hover {
+        cursor: pointer;
+        background: #f00000;
+    }
+
+    ul li .bottom_p .search_btn_collect {
+        width: 80px;
+        height: 28px;
+        line-height: 28px;
+        background: #ffedee;
+        color: #ff2832;
+        border: 1px solid #ff2832;
+        display: inline-block;
+        zoom: 1;
+        border-radius: 3px;
+        text-align: center;
+        font-family: 'Microsoft Yahei';
+        font-size: 14px;
+        margin-right: 10px;
+    }
+
+    ul li .bottom_p .search_btn_collect:hover {
+        cursor: pointer;
+        background: #ffd7d7;
+    }
+</style>
+
+<body>
+    <div class="sub">
+        <ol>
+        </ol>
+    </div>
+    <div class="sub2"></div>
+</body>
+<script src="./js/s.js"></script>
+<script>
+    var n = getCookie("name");
+    if (n === "") {
+        window.location.href = "./index.html";
+    } else {
+        var s = document.querySelector("ol");
+        var ss = s.getElementsByTagName("li");
+        let sub2 = document.querySelector(".sub2");
+        // console.log(sub2);
+        function int() {
+            fetch("http://localhost:3000/sort").then(data => {
+                return data.json();
+            }).then(res => {
+                // console.log(res);
+                let li = document.createElement("li");
+                li.innerHTML = "图书分类";
+                s.append(li);
+                let crr = res;
+                let ol = document.querySelector("ol");
+                for (let i = 0; i < crr.length; i++) {
+                    // console.log(crr[i].catalog);
+                    let li = document.createElement("li");
+                    li.innerHTML = crr[i].catalog;
+                    // 获取book的ID
+                    li.dataset['index'] = crr[i].id;
+                    // console.log(li.dataset['index']);
+                    ol.append(li);
+                }
+                for (let i = 1; i < ss.length; i++) {
+                    ss[i].onclick = function () {
+                        fetch('http://localhost:3000/sort/book?id=' + this.dataset['index']).then(res => {
+                            return res.json();
+                        }).then(res => {
+                            let brr = res;
+                            sub2.innerHTML = "";
+                            let ul = document.createElement("ul");
+                            for (let j = 0; j < brr.length; j++) {
+                                let oli = document.createElement("li");
+                                create(brr[j], oli);
+                                ul.append(oli);
+                                sub2.append(ul);
+                            }
+                        })
+                    };
+                }
+            })
+        }
+        int();
+        show();
+        function show() {
+            fetch("http://localhost:3000/sort/book?").then(data => {
+                return data.json();
+            }).then(res => {
+                // console.log(res);
+                let arr = res;
+                // console.log(arr);
+                each(arr);
+                // console.log(arr[0].data);
+            })
+        }
+        // 遍历数组取出对象
+        function each(arr) {
+            let ul = document.createElement("ul");
+            for (let i = 0; i < arr.length; i++) {
+                let oli = document.createElement("li");
+                create(arr[i], oli);
+                let p = document.createElement("p");
+                p.className = "bottom_p";
+                let a = document.createElement("a");
+                a.className = "search_btn_cart";
+                a.innerHTML = "加入购物车";
+                let a1 = document.createElement("a");
+                a1.className = "search_btn_cart";
+                a1.innerHTML = "购买电子书";
+                let a2 = document.createElement("a");
+                a2.className = "search_btn_collect";
+                a2.innerHTML = "收藏";
+                p.append(a, a1, a2);
+                oli.append(p);
+                ul.append(oli);
+                sub2.append(ul);
+            }
+        }
+        // 创建页面元素
+        function create(item, li) {
+            let p = document.createElement("p");
+            p.innerHTML = item.title;
+            let p1 = document.createElement("p");
+            p1.innerHTML = item.catalog;
+            let p2 = document.createElement("p");
+            p2.innerHTML = item.tags;
+            let p3 = document.createElement("p");
+            p3.innerHTML = item.sub1;
+            let p4 = document.createElement("p");
+            p4.innerHTML = item.sub2;
+            let img = document.createElement("img");
+            img.src = item.img;
+            let p5 = document.createElement("p");
+            p5.innerHTML = item.reading;
+            let p7 = document.createElement("p");
+            p7.innerHTML = item.bytime;
+            li.append(p, p1, p3, p4, img, p5, p7);
+        }
+    }
+</script>
+
+</html>
